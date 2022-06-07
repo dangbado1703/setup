@@ -1,1 +1,1 @@
-export const TIME_OUT = 5 * 60
+export const TIME_OUT = 5 * 60;

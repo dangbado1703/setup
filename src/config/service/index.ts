@@ -1,7 +1,7 @@
-import axios, { AxiosError, AxiosRequestConfig } from "axios";
-import { TIME_OUT } from "../constants";
+import axios, { AxiosError, AxiosRequestConfig } from 'axios';
+import { TIME_OUT } from '../constants';
 
-const localURL = "";
+const localURL = '';
 
 const instance = axios.create({
   baseURL: localURL,
@@ -9,7 +9,7 @@ const instance = axios.create({
 });
 
 const successRequest = (config: AxiosRequestConfig) => {
-  const token = localStorage.getItem("token");
+  const token = localStorage.getItem('token');
   if (token && config.headers) {
     return (config.headers.Authorization = `Bearer ${token}`);
   }
@@ -17,8 +17,8 @@ const successRequest = (config: AxiosRequestConfig) => {
 
 const errorRequest = (error: AxiosError) => {
   const status = error.status || (error.response ? error.response : 0);
-  if (status === "401") {
-    alert("Hết phiên đăng nhập");
+  if (status === '401') {
+    alert('Hết phiên đăng nhập');
     localStorage.clear();
     window.location.reload();
   }

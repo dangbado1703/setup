@@ -1,6 +1,6 @@
-import { AxiosResponse } from "axios";
-import { IValue } from "../../model/value.model";
-import instance from "./index";
+import { AxiosResponse } from 'axios';
+import { IValue } from '../../model/value.model';
+import instance from './index';
 
 export const getMethod = async (url: string, param: string) => {
   try {
