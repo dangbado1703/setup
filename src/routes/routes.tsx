@@ -1,21 +1,41 @@
+import Index from '../page/index';
+import Forgot from '../page/forgotpass/Forgot';
 import Home from '../page/home/Home';
 import Login from '../page/login/Login';
+import Register from '../page/register/Register';
 
-const configRoutes = [
+export const path = {
+  HOME: '/',
+  LOGIN: '/login',
+  FORGOT: '/forgot',
+  REGISTER: '/register',
+};
+
+export const PRIVATE_ROUTES = [
   {
-    name: 'Home',
-    path: '/',
+    path: path.HOME,
     component: Home,
-    template: null,
-    private: 1,
-  },
-  {
-    name: 'Login',
-    path: '/login',
-    component: Login,
-    template: null,
-    private: 0,
   },
 ];
 
-export default configRoutes;
+export const PUBLIC_ROUTES = [
+  {
+    path: path.LOGIN,
+    component: Login,
+    exact: true,
+  },
+  {
+    path: path.FORGOT,
+    component: Forgot,
+    exact: false,
+  },
+  {
+    path: path.REGISTER,
+    component: Register,
+    exact: false,
+  },
+  {
+    path: path.HOME,
+    component: Index,
+  },
+];

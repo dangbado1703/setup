@@ -1,5 +1,5 @@
 import axios, { AxiosError, AxiosRequestConfig } from 'axios';
-import { TIME_OUT } from '../constants';
+import { TIME_OUT } from '../constants/constants';
 
 const localURL = '';
 

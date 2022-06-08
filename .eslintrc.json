@@ -22,6 +22,7 @@
   "rules": {
     "quotes": ["error", "single"],
     "typescript-eslint/ban-ts-comment": "off",
+    "react/no-unknown-property": ["enabled", { "ignore": "ignore" }],
     "no-var": "error",
     "eqeqeq": ["error", "always", { "null": "ignore" }]
   }

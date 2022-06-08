@@ -10,6 +10,7 @@ const initState = {
 
 const login = createAsyncThunk('Login/login', async (value: IValue<IValueLogin>) => {
   const response: AxiosResponse = await postMethod('/login', '', value);
+  localStorage.setItem('token', response.data.token);
   return response.data;
 });
 
@@ -24,14 +25,19 @@ const authenticate = createSlice({
     ) {
       return initState;
     },
+    authen(state) {
+      state.isAuthenticated = true;
+    },
   },
   extraReducers(builder) {
-    builder.addCase(login.fulfilled, (state, action) => {
+    builder.addCase(login.fulfilled, (state) => {
       state.isAuthenticated = true;
     });
   },
 });
 
 const loginReducer = authenticate.reducer;
+
+export const { authen } = authenticate.actions;
 
 export default loginReducer;
