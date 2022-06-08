@@ -1,16 +1,16 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
-
 import './App.scss';
-import Home from './page/home/Home';
-import Login from './page/login/Login';
+import { useAppSelector } from './redux/hooks';
+import configRoutes from './routes/routes';
 
 function App() {
+  const isAuthenticated = useAppSelector((state) => state.loginReducer.isAuthenticated);
+  const token = localStorage.getItem('token');
   return (
     <div className="App">
       <Routes>
-        <Route path="/login" element={<Login />} />
-        <Route path="/" element={<Home />} />
+        
       </Routes>
     </div>
   );
