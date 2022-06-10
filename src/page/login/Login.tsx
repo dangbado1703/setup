@@ -5,7 +5,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAppDispatch } from '../../redux/hooks';
 import { path } from '../../routes/routes';
-import Register from '../register/Register';
+import { login } from './login.reducer';
 
 type FormData = {
   username: string;
@@ -22,8 +22,7 @@ const Login = () => {
   const navigate = useNavigate();
 
   const onSubmit: SubmitHandler<FormData> = (data) => {
-    localStorage.setItem('token', 'asdasfasf');
-    navigate(path.HOME);
+    dispatch(login(data));
   };
   const handleRegister = () => {
     navigate('/register');

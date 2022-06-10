@@ -1,7 +1,7 @@
 import axios, { AxiosError, AxiosRequestConfig } from 'axios';
 import { TIME_OUT } from '../constants/constants';
 
-const localURL = '';
+const localURL = 'http://localhost:3334/api';
 
 const instance = axios.create({
   baseURL: localURL,
@@ -13,6 +13,7 @@ const successRequest = (config: AxiosRequestConfig) => {
   if (token && config.headers) {
     return (config.headers.Authorization = `Bearer ${token}`);
   }
+  return config;
 };
 
 const errorRequest = (error: AxiosError) => {

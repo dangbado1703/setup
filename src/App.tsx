@@ -15,7 +15,7 @@ function App() {
     } else {
       navigate(path.HOME);
     }
-  }, []);
+  }, [authenticated]);
   return (
     <div className="App">
       <Routes>{PUBLIC_ROUTES.map((a) => (a.component ? <Route key={a.path} path={a.path} element={<a.component />} /> : null))}</Routes>

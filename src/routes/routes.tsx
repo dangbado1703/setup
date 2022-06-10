@@ -5,7 +5,7 @@ import Login from '../page/login/Login';
 import Register from '../page/register/Register';
 
 export const path = {
-  HOME: '/',
+  HOME: '*',
   LOGIN: '/login',
   FORGOT: '/forgot',
   REGISTER: '/register',

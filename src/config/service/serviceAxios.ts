@@ -1,5 +1,4 @@
 import { AxiosResponse } from 'axios';
-import { IValue } from '../../model/value.model';
 import instance from './index';
 
 export const getMethod = async (url: string, param: string) => {
@@ -13,7 +12,7 @@ export const getMethod = async (url: string, param: string) => {
   }
 };
 
-export const postMethod = async (url: string, param: string, value: IValue) => {
+export const postMethod = async (url: string, value: any) => {
   try {
     const response: AxiosResponse = await instance.post(url, value);
     return response.data;

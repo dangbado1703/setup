@@ -2,14 +2,14 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import { AxiosResponse } from 'axios';
 import { WritableDraft } from 'immer/dist/internal';
 import { postMethod } from '../../config/service/serviceAxios';
-import { IValue, IValueLogin } from '../../model/value.model';
+import { IValueLogin } from '../../model/value.model';
 
 const initState = {
   isAuthenticated: false,
 };
 
-const login = createAsyncThunk('Login/login', async (value: IValue<IValueLogin>) => {
-  const response: AxiosResponse = await postMethod('/login', '', value);
+export const login = createAsyncThunk('Login/login', async (value: IValueLogin) => {
+  const response: AxiosResponse = await postMethod('/auth/login', value);
   localStorage.setItem('token', response.data.token);
   return response.data;
 });
