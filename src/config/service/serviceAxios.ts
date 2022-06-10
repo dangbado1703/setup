@@ -1,7 +1,7 @@
 import { AxiosResponse } from 'axios';
 import instance from './index';
 
-export const getMethod = async (url: string, param: string) => {
+export const getMethod = async (url: string, param: string | null | number | boolean) => {
   try {
     const response: AxiosResponse = await instance.get(url, {
       params: param,
