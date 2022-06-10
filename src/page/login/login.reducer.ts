@@ -11,6 +11,7 @@ const initState = {
 export const login = createAsyncThunk('Login/login', async (value: IValueLogin) => {
   const response: AxiosResponse = await postMethod('/auth/login', value);
   localStorage.setItem('token', response.data.token);
+  console.log(response.data.message)
   return response.data;
 });
 

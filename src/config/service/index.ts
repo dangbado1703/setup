@@ -1,4 +1,5 @@
 import axios, { AxiosError, AxiosRequestConfig } from 'axios';
+import { toast } from 'react-toastify';
 import { TIME_OUT } from '../constants/constants';
 
 const localURL = 'http://localhost:3334/api';
@@ -16,12 +17,15 @@ const successRequest = (config: AxiosRequestConfig) => {
   return config;
 };
 
-const errorRequest = (error: AxiosError) => {
-  const status = error.status || (error.response ? error.response : 0);
-  if (status === '401') {
+const errorRequest = (error: any) => {
+  const status = error.status || (error.response ? error.response.status : 0);
+  if (status === 401) {
     alert('Hết phiên đăng nhập');
     localStorage.clear();
     window.location.reload();
+  }
+  if (status === 400) {
+    toast.error(`${error.response?.data.message}`);
   }
   return Promise.reject(error);
 };

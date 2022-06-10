@@ -1,4 +1,4 @@
-import { AxiosResponse } from 'axios';
+import { AxiosError, AxiosResponse } from 'axios';
 import instance from './index';
 
 export const getMethod = async (url: string, param: string | null | number | boolean) => {
@@ -13,10 +13,6 @@ export const getMethod = async (url: string, param: string | null | number | boo
 };
 
 export const postMethod = async (url: string, value: any) => {
-  try {
-    const response: AxiosResponse = await instance.post(url, value);
-    return response.data;
-  } catch (error) {
-    console.log(error);
-  }
+  const response: AxiosResponse = await instance.post(url, value);
+  return response.data;
 };
