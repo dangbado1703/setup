@@ -34,8 +34,4 @@ export const PUBLIC_ROUTES = [
     component: Register,
     exact: false,
   },
-  {
-    path: path.HOME,
-    component: Index,
-  },
 ];

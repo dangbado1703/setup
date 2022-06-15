@@ -5,7 +5,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import './App.scss';
 import { getToken } from './model/getToken';
 import { useAppSelector } from './redux/hooks';
-import { path, PUBLIC_ROUTES } from './routes/routes';
+import { path, PRIVATE_ROUTES, PUBLIC_ROUTES } from './routes/routes';
 
 function App() {
   const navigate = useNavigate();
@@ -21,7 +21,16 @@ function App() {
   return (
     <div className="App">
       <ToastContainer position={toast.POSITION.TOP_RIGHT} autoClose={3000} />
-      <Routes>{PUBLIC_ROUTES.map((a) => (a.component ? <Route key={a.path} path={a.path} element={<a.component />} /> : null))}</Routes>
+      {token && (
+        <>
+          <Routes>
+            {PRIVATE_ROUTES.map((a) => (a.component ? <Route key={a.path} path={a.path} element={<a.component />} /> : null))}
+          </Routes>
+        </>
+      )}
+      {!token && (
+        <Routes>{PUBLIC_ROUTES.map((a) => (a.component ? <Route key={a.path} path={a.path} element={<a.component />} /> : null))}</Routes>
+      )}
     </div>
   );
 }

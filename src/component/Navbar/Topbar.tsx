@@ -5,6 +5,10 @@ import Search from './Search';
 
 const Topbar: React.FC = () => {
   const [image, setImage] = useState(false);
+  const handleLogOut = () => {
+    localStorage.clear();
+    window.location.reload();
+  };
   return (
     <div className="flex justify-around items-center bg-blue-500 text-white">
       <div className="p-3 cursor-pointer">
@@ -35,6 +39,9 @@ const Topbar: React.FC = () => {
       </div>
       <div className="flex justify-center items-center w-10 h-10 text-lg rounded-full border cursor-pointer">
         {image ? <img /> : <FontAwesomeIcon icon={faUserTie} />}
+      </div>
+      <div onClick={handleLogOut} className="cursor-pointer bg-green-600 w-20 flex justify-center items-center rounded-lg">
+        <button className='p-2'>Thoát</button>
       </div>
     </div>
   );
