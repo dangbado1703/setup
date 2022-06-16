@@ -1,13 +1,20 @@
 import { faBell, faMessage, faUser, faUserTie } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Search from './Search';
 
 const Topbar: React.FC = () => {
   const [image, setImage] = useState(false);
+  const navigate = useNavigate();
+  const infoName = localStorage.getItem('name');
+  const username = localStorage.getItem('username');
   const handleLogOut = () => {
     localStorage.clear();
     window.location.reload();
+  };
+  const handleChangeToProfile = () => {
+    navigate(`/profile/${username}`);
   };
   return (
     <div className="flex justify-around items-center bg-blue-500 text-white">
@@ -37,11 +44,14 @@ const Topbar: React.FC = () => {
           </span>
         </div>
       </div>
-      <div className="flex justify-center items-center w-10 h-10 text-lg rounded-full border cursor-pointer">
-        {image ? <img /> : <FontAwesomeIcon icon={faUserTie} />}
+      <div className="flex justify-center items-center cursor-pointer" onClick={handleChangeToProfile}>
+        <div className="w-10 h-10 text-lg rounded-full border flex justify-center items-center cursor-pointer">
+          {image ? <img /> : <FontAwesomeIcon icon={faUserTie} />}
+        </div>
+        <span className="ml-2">{infoName}</span>
       </div>
       <div onClick={handleLogOut} className="cursor-pointer bg-green-600 w-20 flex justify-center items-center rounded-lg">
-        <button className='p-2'>Thoát</button>
+        <button className="p-2">Thoát</button>
       </div>
     </div>
   );

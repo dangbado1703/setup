@@ -1,26 +1,18 @@
 import { faCircleExclamation, faCircleQuestion } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { range } from '../../config/constants/constants';
-
-interface FormRegister {
-  last_name: string;
-  first_name: string;
-  username: string;
-  password: string;
-  day: string;
-  month: string;
-  year: string;
-  gen: string;
-}
-
+import { IFormRegister } from '../../model/value.model';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import { registerAccount, resetState } from './register.reducer';
 const Register: React.FC = () => {
-  const [value, setValue] = useState({
-    day: 0 as number,
-    month: 0 as number,
-    year: 0 as number,
-  });
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const isRegisterSuccess = useAppSelector((state) => state.registerReducer.isRegisterSuccess);
+  const messageSuccess = useAppSelector((state) => state.registerReducer.messageSuccess);
   const day = range(1, 31);
   const month = range(1, 12);
   const getYear = new Date().getFullYear();
@@ -29,7 +21,7 @@ const Register: React.FC = () => {
     register,
     formState: { errors },
     handleSubmit,
-  } = useForm<FormRegister>({
+  } = useForm<IFormRegister>({
     defaultValues: {
       last_name: '',
       first_name: '',
@@ -42,15 +34,18 @@ const Register: React.FC = () => {
     },
   });
   useEffect(() => {
-    setValue({
-      day: new Date().getDate(),
-      month: new Date().getMonth() + 1,
-      year: new Date().getFullYear(),
-    });
-  }, []);
+    if (isRegisterSuccess) {
+      toast.success(`${messageSuccess}`);
+      navigate('/login');
+      dispatch(resetState());
+    }
+  }, [isRegisterSuccess]);
+  const submitForm: SubmitHandler<IFormRegister> = (data) => {
+    dispatch(registerAccount(data));
+  };
 
-  const submitForm: SubmitHandler<FormRegister> = (data) => {
-    console.log(data);
+  const handleBackLogin = () => {
+    navigate('/login');
   };
 
   return (
@@ -69,7 +64,7 @@ const Register: React.FC = () => {
                   className={`outline-none text-15px leading-4 p-11px rounded w-full ${
                     errors.first_name ? 'border-red-500 border' : 'border'
                   }`}
-                  {...register('first_name', { required: true, maxLength: 8, minLength: 4 })}
+                  {...register('first_name', { required: true })}
                 />
                 {errors.first_name && (
                   <FontAwesomeIcon className="absolute top-1/2 -translate-y-1/2 right-3 text-red-600" icon={faCircleExclamation} />
@@ -81,7 +76,7 @@ const Register: React.FC = () => {
                   className={`outline-none text-15px leading-4 p-11px rounded w-full ${
                     errors.last_name ? 'border-red-500 border' : 'border'
                   }`}
-                  {...register('last_name', { required: true, maxLength: 8, minLength: 4 })}
+                  {...register('last_name', { required: true })}
                 />
                 {errors.last_name && (
                   <FontAwesomeIcon className="absolute top-1/2 -translate-y-1/2 right-3 text-red-600" icon={faCircleExclamation} />
@@ -114,32 +109,17 @@ const Register: React.FC = () => {
                 Sinh nhật <FontAwesomeIcon icon={faCircleQuestion} />
               </p>
               <div className="flex justify-around">
-                <select
-                  {...register('day')}
-                  className="w-1/3 outline-none text-15px leading-4 border p-10px rounded"
-                  // value={value.day}
-                  // onChange={(e) => setValue({ ...value, day: +e.target.value })}
-                >
+                <select {...register('day')} className="w-1/3 outline-none text-15px leading-4 border p-10px rounded">
                   {day.map((a) => (
                     <option key={a}>{a}</option>
                   ))}
                 </select>
-                <select
-                  {...register('month')}
-                  className="w-1/3 mx-2 outline-none text-15px leading-4 border p-10px rounded"
-                  // value={value.month}
-                  // onChange={(e) => setValue({ ...value, month: +e.target.value })}
-                >
+                <select {...register('month')} className="w-1/3 mx-2 outline-none text-15px leading-4 border p-10px rounded">
                   {month.map((a) => (
                     <option key={a}>{a}</option>
                   ))}
                 </select>
-                <select
-                  {...register('year')}
-                  className="w-1/3 outline-none text-15px leading-4 border p-10px rounded"
-                  // value={value.year}
-                  // onChange={(e) => setValue({ ...value, year: +e.target.value })}
-                >
+                <select {...register('year')} className="w-1/3 outline-none text-15px leading-4 border p-10px rounded">
                   {year.map((a) => (
                     <option key={a}>{a}</option>
                   ))}
@@ -150,25 +130,26 @@ const Register: React.FC = () => {
               <p className="mb-1 text-770 text-xs">
                 Giới tính <FontAwesomeIcon icon={faCircleQuestion} />
               </p>
-              <div className="flex justify-around">
-                <div className="w-1/3 border rounded p-2 flex justify-between items-center">
+              <div className="flex justify-between">
+                <label htmlFor="female" className="w-1/2 border rounded p-2 flex justify-between items-center">
                   <span className="text-15px">Nữ</span>
-                  <input {...register('gen')} type="radio" />
-                </div>
-                <div className="w-1/3 border rounded p-2 mx-2 flex justify-between items-center">
+                  <input {...register('gen')} type="radio" value="female" id="female" />
+                </label>
+                <label htmlFor="male" className="w-1/2 border rounded p-2 mx-2 flex justify-between items-center">
                   <span className="text-15px">Nam</span>
-                  <input {...register('gen')} type="radio" />
-                </div>
-                <div className="w-1/3 border rounded p-2 flex justify-between items-center">
-                  <span className="text-15px">Tùy chỉnh</span>
-                  <input {...register('gen')} type="radio" />
-                </div>
+                  <input {...register('gen')} type="radio" value="male" id="male" />
+                </label>
               </div>
             </div>
             <div className="w-full flex justify-center items-center mt-8 mb-5">
               <button type="submit" className="w-1/3 text-white bg-green-600 rounded-md h-9 text-lg px-8 font-semibold">
                 Đăng ký
               </button>
+            </div>
+            <div className="w-full flex justify-end">
+              <span className="text-xs text-blue-600 cursor-pointer" onClick={handleBackLogin}>
+                Bạn đã có tài khoản?
+              </span>
             </div>
           </div>
         </form>
