@@ -14,8 +14,6 @@ function App() {
   useEffect(() => {
     if (!token) {
       navigate(path.LOGIN);
-    } else {
-      navigate(path.HOME);
     }
   }, [authenticated]);
   return (

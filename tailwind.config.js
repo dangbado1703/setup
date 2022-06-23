@@ -11,6 +11,10 @@ module.exports = {
         "432": '432px',
         '170': '170px'
       },
+      // custom height
+      height: {
+        '450': '450px'
+      },
       // custom box-shadow
       boxShadow: {
         '3xl': '0px 0px 15px 3px rgba(0,0,0,0.75)',
@@ -19,7 +23,9 @@ module.exports = {
       },
       // custom top-bottom-left-right
       inset: {
-        '14px': '14px'
+        '14px': '14px',
+        '72px': '72px',
+        '18px': '18px'
       },
       // custom padding,margin
       spacing: {

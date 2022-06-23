@@ -23,6 +23,7 @@ const Login = () => {
 
   const onSubmit: SubmitHandler<FormData> = (data) => {
     dispatch(login(data));
+    navigate(path.HOME);
   };
   const handleRegister = () => {
     navigate('/register');
@@ -36,7 +37,7 @@ const Login = () => {
             <p className="text-3xl font-medium mb-3">Đăng nhập gần đây</p>
             <p className="opacity-80 text-sm">Nhấp vào ảnh của bạn hoặc thêm tài khoản</p>
             <div className="flex h-52 mt-8">
-              <div className="w-40 border rounded-2xl overflow-hidden hover:shadow-3xl duration-300 cursor-pointer mr-5">
+              <div className="w-40 border rounded-2xl overflow-hidden hover:shadow-register duration-300 cursor-pointer mr-5">
                 <div className="h-40 w-40 flex justify-center items-center bg-stone-100">
                   <img />
                 </div>
@@ -44,7 +45,7 @@ const Login = () => {
                   <p className="text-lg text-blue-600">Tên</p>
                 </div>
               </div>
-              <div className="w-40 border rounded-2xl overflow-hidden hover:shadow-3xl duration-300 transition-all transition-shadow cursor-pointer">
+              <div className="w-40 border rounded-2xl overflow-hidden hover:shadow-register duration-300 transition-all transition-shadow cursor-pointer">
                 <div className="h-40 w-40 flex justify-center items-center bg-stone-100">
                   <div className="w-11 h-11 bg-blue-600 flex justify-center items-center rounded-full">
                     <FontAwesomeIcon icon={faPlus} className="text-3xl text-white" />
