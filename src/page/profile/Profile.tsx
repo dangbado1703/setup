@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 import anhbia from '../../assets/anhbia.jpg';
 import avatar from '../../assets/avatar.jpg';
 import { useAppDispatch } from '../../redux/hooks';
+import { getProfile } from './profile.reducer';
 
 const Profile = () => {
   const [show, setShow] = useState(false);
@@ -12,9 +13,9 @@ const Profile = () => {
   const params = useParams();
   const dispatch = useAppDispatch()
 
-  // useEffect(() => {
-  //   dispatch(getProfile(params))
-  // }, [params])
+  useEffect(() => {
+    dispatch(getProfile(params))
+  }, [params])
 
   const showDiv = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.stopPropagation();

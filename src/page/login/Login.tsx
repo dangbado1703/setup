@@ -1,8 +1,9 @@
 import { faPlus, faTriangleExclamation } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React from 'react';
+import React, { useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
+import { getToken } from '../../model/getToken';
 import { useAppDispatch } from '../../redux/hooks';
 import { path } from '../../routes/routes';
 import { login } from './login.reducer';
@@ -21,9 +22,14 @@ const Login = () => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
 
+  useEffect(() => {
+    if (getToken()) {
+      navigate(path.HOME);
+    }
+  })
+
   const onSubmit: SubmitHandler<FormData> = (data) => {
     dispatch(login(data));
-    navigate(path.HOME);
   };
   const handleRegister = () => {
     navigate('/register');
@@ -63,9 +69,8 @@ const Login = () => {
             <form onSubmit={handleSubmit(onSubmit)} className="w-full flex justify-center items-center flex-col">
               <div className="w-full relative mb-5">
                 <input
-                  className={`w-full outline-none  border p-3 rounded-xl ${
-                    errors.username ? 'border-red-600 focus:border-red-600' : 'focus:border-blue-400'
-                  }`}
+                  className={`w-full outline-none  border p-3 rounded-xl ${errors.username ? 'border-red-600 focus:border-red-600' : 'focus:border-blue-400'
+                    }`}
                   type="text"
                   defaultValue=""
                   {...register('username', { required: true, maxLength: 12, minLength: 4 })}
@@ -82,9 +87,8 @@ const Login = () => {
               </div>
               <div className="w-full relative mb-5">
                 <input
-                  className={`w-full outline-none  border p-3 rounded-xl ${
-                    errors.username ? 'border-red-600 focus:border-red-600' : 'focus:border-blue-400'
-                  }`}
+                  className={`w-full outline-none  border p-3 rounded-xl ${errors.username ? 'border-red-600 focus:border-red-600' : 'focus:border-blue-400'
+                    }`}
                   type="password"
                   defaultValue=""
                   {...register('password', { required: true, maxLength: 12, minLength: 4 })}
