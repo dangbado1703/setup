@@ -4,15 +4,17 @@ import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import anhbia from '../../assets/anhbia.jpg';
 import avatar from '../../assets/avatar.jpg';
+import { useAppDispatch } from '../../redux/hooks';
 
 const Profile = () => {
   const [show, setShow] = useState(false);
   const [valueUpload, setValueUpload] = useState<File>();
   const params = useParams();
+  const dispatch = useAppDispatch()
 
-  useEffect(() => {
-    
-  })
+  // useEffect(() => {
+  //   dispatch(getProfile(params))
+  // }, [params])
 
   const showDiv = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.stopPropagation();
