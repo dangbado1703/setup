@@ -13,7 +13,6 @@ export const login = createAsyncThunk('Login/login', async (value: IValueLogin) 
   localStorage.setItem('token', response.data.token);
   localStorage.setItem('name', response.data.first_name + ' ' + response.data.last_name);
   localStorage.setItem('username', response.data.username);
-  // console.log(response.data);
   return response.data;
 });
 
