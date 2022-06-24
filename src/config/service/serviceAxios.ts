@@ -10,6 +10,6 @@ export const getMethod = async (url: string, param: any) => {
 
 export const postMethod = async (url: string, value: any) => {
   const response: AxiosResponse = await instance.post(url, value);
-  console.log(response)
+  console.log(response);
   return response.data;
 };

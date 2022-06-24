@@ -3,9 +3,11 @@ import { Route, Routes, useNavigate } from 'react-router-dom';
 import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './App.scss';
-import { getToken } from './model/getToken';
+import getToken from './config/constants/getToken';
 import { useAppSelector } from './redux/hooks';
-import { path, PRIVATE_ROUTES, PUBLIC_ROUTES } from './routes/routes';
+import PRIVATE_ROUTES from './routes/PRIVATE_ROUTES';
+import PUBLIC_ROUTES from './routes/PUBLIC_ROUTES';
+import path from './routes/routes';
 
 function App() {
   const navigate = useNavigate();
@@ -20,11 +22,7 @@ function App() {
     <div className="App">
       <ToastContainer position={toast.POSITION.TOP_RIGHT} autoClose={3000} />
       {token && (
-        <>
-          <Routes>
-            {PRIVATE_ROUTES.map((a) => (a.component ? <Route key={a.path} path={a.path} element={<a.component />} /> : null))}
-          </Routes>
-        </>
+        <Routes>{PRIVATE_ROUTES.map((a) => (a.component ? <Route key={a.path} path={a.path} element={<a.component />} /> : null))}</Routes>
       )}
       {!token && (
         <Routes>{PUBLIC_ROUTES.map((a) => (a.component ? <Route key={a.path} path={a.path} element={<a.component />} /> : null))}</Routes>

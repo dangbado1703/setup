@@ -8,11 +8,15 @@ import { range } from '../../config/constants/constants';
 import { IFormRegister } from '../../model/value.model';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { registerAccount, resetState } from './register.reducer';
-const Register: React.FC = () => {
+
+function Register() {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const isRegisterSuccess = useAppSelector((state) => state.registerReducer.isRegisterSuccess);
   const messageSuccess = useAppSelector((state) => state.registerReducer.messageSuccess);
+
+  console.log(messageSuccess);
+
   const day = range(1, 31);
   const month = range(1, 12);
   const getYear = new Date().getFullYear();
@@ -147,15 +151,15 @@ const Register: React.FC = () => {
               </button>
             </div>
             <div className="w-full flex justify-end">
-              <span className="text-xs text-blue-600 cursor-pointer" onClick={handleBackLogin}>
+              <button type="button" className="text-xs text-blue-600 cursor-pointer" onClick={handleBackLogin}>
                 Bạn đã có tài khoản?
-              </span>
+              </button>
             </div>
           </div>
         </form>
       </div>
     </div>
   );
-};
+}
 
 export default Register;

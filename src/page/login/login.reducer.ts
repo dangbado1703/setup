@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { AxiosResponse } from 'axios';
-import { WritableDraft } from 'immer/dist/internal';
-import { postMethod } from '../../config/service/serviceAxios';
+import instance from '../../config/service';
+import IFormDataLogin from '../../model/formdata/login.data';
+import IForm from '../../model/index.model';
 import { IValueLogin } from '../../model/value.model';
 
 const initState = {
@@ -9,9 +9,9 @@ const initState = {
 };
 
 export const login = createAsyncThunk('Login/login', async (value: IValueLogin) => {
-  const response: AxiosResponse = await postMethod('/auth/login', value);
+  const response: IForm<IFormDataLogin> = await instance.post('/auth/login', value);
   localStorage.setItem('token', response.data.token);
-  localStorage.setItem('name', response.data.first_name + ' ' + response.data.last_name);
+  localStorage.setItem('name', `${response.data.first_name} ${response.data.last_name} `);
   localStorage.setItem('username', response.data.username);
   return response.data;
 });
@@ -20,20 +20,18 @@ const authenticate = createSlice({
   name: 'Login',
   initialState: initState,
   reducers: {
-    reset(
-      state: WritableDraft<{
-        isAuthenticated: boolean;
-      }>
-    ) {
+    reset() {
       return initState;
     },
     authen(state) {
-      state.isAuthenticated = true;
+      const isTrueAuthenticated = state;
+      isTrueAuthenticated.isAuthenticated = true;
     },
   },
   extraReducers(builder) {
     builder.addCase(login.fulfilled, (state) => {
-      state.isAuthenticated = true;
+      const loginFulfill = state;
+      loginFulfill.isAuthenticated = true;
     });
   },
 });

@@ -2,7 +2,7 @@ import { faSearch } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useState } from 'react';
 
-const Search: React.FC = () => {
+function Search() {
   const [valueSearch, setValueSearch] = useState('');
   const handleOnChangeSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.value.startsWith(' ')) {
@@ -23,6 +23,6 @@ const Search: React.FC = () => {
       </div>
     </div>
   );
-};
+}
 
 export default Search;

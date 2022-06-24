@@ -4,7 +4,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Search from './Search';
 
-const Topbar: React.FC = () => {
+function Topbar() {
   const [image, setImage] = useState(false);
   const navigate = useNavigate();
   const infoName = localStorage.getItem('name');
@@ -15,7 +15,17 @@ const Topbar: React.FC = () => {
   };
   const handleChangeToProfile = () => {
     navigate(`/profile/${username}`);
+    setImage(true);
   };
+
+  const handleKeyDownProfile = () => {
+    console.log('hello');
+  };
+
+  const handleKeyDownLogOut = () => {
+    console.log('hello');
+  };
+
   return (
     <div className="flex justify-around items-center bg-blue-500 text-white">
       <div className="p-3 cursor-pointer">
@@ -44,17 +54,29 @@ const Topbar: React.FC = () => {
           </span>
         </div>
       </div>
-      <div className="flex justify-center items-center cursor-pointer" onClick={handleChangeToProfile}>
+      <div
+        className="flex justify-center items-center cursor-pointer"
+        onClick={handleChangeToProfile}
+        onKeyDown={handleKeyDownProfile}
+        tabIndex={0}
+        role="button">
         <div className="w-10 h-10 text-lg rounded-full border flex justify-center items-center cursor-pointer">
-          {image ? <img /> : <FontAwesomeIcon icon={faUserTie} />}
+          {image ? <img alt="user" /> : <FontAwesomeIcon icon={faUserTie} />}
         </div>
         <span className="ml-2">{infoName}</span>
       </div>
-      <div onClick={handleLogOut} className="cursor-pointer bg-green-600 w-20 flex justify-center items-center rounded-lg">
-        <button className="p-2">Thoát</button>
+      <div
+        onClick={handleLogOut}
+        onKeyDown={handleKeyDownLogOut}
+        tabIndex={0}
+        role="button"
+        className="cursor-pointer bg-green-600 w-20 flex justify-center items-center rounded-lg">
+        <button type="button" className="p-2">
+          Thoát
+        </button>
       </div>
     </div>
   );
-};
+}
 
 export default Topbar;

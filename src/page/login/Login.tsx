@@ -3,17 +3,15 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Link, useNavigate } from 'react-router-dom';
-import { getToken } from '../../model/getToken';
-import { useAppDispatch } from '../../redux/hooks';
-import { path } from '../../routes/routes';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
+import path from '../../routes/routes';
 import { login } from './login.reducer';
 
 type FormData = {
   username: string;
   password: string;
 };
-
-const Login = () => {
+function Login() {
   const {
     register,
     handleSubmit,
@@ -21,12 +19,12 @@ const Login = () => {
   } = useForm<FormData>();
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
-
+  const authenticated = useAppSelector((state) => state.loginReducer.isAuthenticated);
   useEffect(() => {
-    if (getToken()) {
-      navigate(path.HOME);
+    if (authenticated) {
+      navigate('/*');
     }
-  })
+  }, [authenticated]);
 
   const onSubmit: SubmitHandler<FormData> = (data) => {
     dispatch(login(data));
@@ -45,7 +43,7 @@ const Login = () => {
             <div className="flex h-52 mt-8">
               <div className="w-40 border rounded-2xl overflow-hidden hover:shadow-register duration-300 cursor-pointer mr-5">
                 <div className="h-40 w-40 flex justify-center items-center bg-stone-100">
-                  <img />
+                  <img alt="user" />
                 </div>
                 <div className="h-1/4 flex justify-center items-center">
                   <p className="text-lg text-blue-600">Tên</p>
@@ -69,8 +67,9 @@ const Login = () => {
             <form onSubmit={handleSubmit(onSubmit)} className="w-full flex justify-center items-center flex-col">
               <div className="w-full relative mb-5">
                 <input
-                  className={`w-full outline-none  border p-3 rounded-xl ${errors.username ? 'border-red-600 focus:border-red-600' : 'focus:border-blue-400'
-                    }`}
+                  className={`w-full outline-none  border p-3 rounded-xl ${
+                    errors.username ? 'border-red-600 focus:border-red-600' : 'focus:border-blue-400'
+                  }`}
                   type="text"
                   defaultValue=""
                   {...register('username', { required: true, maxLength: 12, minLength: 4 })}
@@ -87,8 +86,9 @@ const Login = () => {
               </div>
               <div className="w-full relative mb-5">
                 <input
-                  className={`w-full outline-none  border p-3 rounded-xl ${errors.username ? 'border-red-600 focus:border-red-600' : 'focus:border-blue-400'
-                    }`}
+                  className={`w-full outline-none  border p-3 rounded-xl ${
+                    errors.username ? 'border-red-600 focus:border-red-600' : 'focus:border-blue-400'
+                  }`}
                   type="password"
                   defaultValue=""
                   {...register('password', { required: true, maxLength: 12, minLength: 4 })}
@@ -112,9 +112,12 @@ const Login = () => {
                 Quên mật khẩu?
               </Link>
             </div>
-            <div className="w-full border-b flex mx-4 my-5"></div>
+            <div className="w-full border-b flex mx-4 my-5" />
             <div className="w-full flex justify-center items-center">
-              <button onClick={handleRegister} className="bg-green-500 rounded-md px-4 leading-48px font-semibold text-white w-44">
+              <button
+                type="button"
+                onClick={handleRegister}
+                className="bg-green-500 rounded-md px-4 leading-48px font-semibold text-white w-44">
                 Tạo tài khoản mới
               </button>
             </div>
@@ -123,6 +126,6 @@ const Login = () => {
       </div>
     </div>
   );
-};
+}
 
 export default Login;

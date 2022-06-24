@@ -1,36 +1,38 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { postMethod } from '../../config/service/serviceAxios';
+import instance from '../../config/service';
+import IForm from '../../model/index.model';
 import { IFormRegister } from '../../model/value.model';
 
 const initState = {
   isRegisterSuccess: false,
   messageSuccess: '',
 };
-
 export const registerAccount = createAsyncThunk('register/registerAccount', async (value: IFormRegister) => {
-  const response = await postMethod('auth/register', value);
+  const response: IForm<IFormRegister> = await instance.post('auth/register', value);
   return response;
 });
-
 const register = createSlice({
   name: 'register',
   initialState: initState,
   reducers: {
-    resetState(state) {
+    resetState() {
       return initState;
     },
   },
   extraReducers(builder) {
     builder
       .addCase(registerAccount.fulfilled, (state, action) => {
-        state.messageSuccess = action.payload.message;
-        state.isRegisterSuccess = true;
+        const registerAccountFulfill = state;
+        registerAccountFulfill.messageSuccess = action.payload.message;
+        registerAccountFulfill.isRegisterSuccess = true;
       })
       .addCase(registerAccount.pending, (state) => {
-        state.isRegisterSuccess = false;
+        const registerAccountPending = state;
+        registerAccountPending.isRegisterSuccess = false;
       })
       .addCase(registerAccount.rejected, (state) => {
-        state.isRegisterSuccess = false;
+        const registerAccountRejected = state;
+        registerAccountRejected.isRegisterSuccess = false;
       });
   },
 });

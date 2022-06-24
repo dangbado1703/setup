@@ -1,32 +1,33 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
-import { postMethod } from '../../config/service/serviceAxios';
+import instance from '../../config/service';
+import IForm from '../../model/index.model';
 import { IFormInfo } from '../../model/profile.model';
 
 const initState = {
-    dataProfile: {} as IFormInfo
-}
+  dataProfile: {} as IFormInfo,
+};
 
-export const getProfile = createAsyncThunk('profile/getProfile', async (value: string | undefined) => {
-    const data = await postMethod('/profile', value)
-    console.log(data)
-    return data
-})
+export const getProfile = createAsyncThunk('profileUser/getProfile', async (value: { username: string }) => {
+  const data: IForm<IFormInfo> = await instance.post('/profile', value);
+  return data.data;
+});
 
 const profileSlice = createSlice({
-    name: 'profile',
-    initialState: initState,
-    reducers: {
-        reset() {
-            return initState
-        }
+  name: 'profileUser',
+  initialState: initState,
+  reducers: {
+    reset() {
+      return initState;
     },
-    extraReducers(builder) {
-        builder.addCase(getProfile.fulfilled, (state, action) => {
-            state.dataProfile = action.payload
-        })
-    },
-})
+  },
+  extraReducers(builder) {
+    builder.addCase(getProfile.fulfilled, (state, action) => {
+      const getProfilefulfilled = state;
+      getProfilefulfilled.dataProfile = action.payload;
+    });
+  },
+});
 
-const profileReducer = profileSlice.reducer
+const profileReducer = profileSlice.reducer;
 
-export default profileReducer
+export default profileReducer;

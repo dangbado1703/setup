@@ -3,8 +3,11 @@ import Feed from '../../component/Body/Feed';
 import Rightbar from '../../component/Body/Rightbar';
 import Sidebar from '../../component/Body/Sidebar';
 import Topbar from '../../component/Navbar/Topbar';
+import getToken from '../../config/constants/getToken';
 
-const Home: React.FC = () => {
+function Home() {
+  const token = getToken();
+  console.log(token);
   return (
     <div className="home">
       <div>
@@ -17,6 +20,6 @@ const Home: React.FC = () => {
       </div>
     </div>
   );
-};
+}
 
 export default Home;

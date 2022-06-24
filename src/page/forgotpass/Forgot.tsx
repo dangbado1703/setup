@@ -1,10 +1,10 @@
 import React from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
+
 type FormValue = {
   username: string;
 };
-
-const Forgot = () => {
+function Forgot() {
   const {
     register,
     handleSubmit,
@@ -20,7 +20,7 @@ const Forgot = () => {
           <div>
             <h2 className="text-xl font-semibold leading-6 py-18px pr-4 pl-18px ">Tìm tài khoản của bạn</h2>
           </div>
-          <div className="w-full border-b flex"></div>
+          <div className="w-full border-b flex" />
           <div className="p-4">
             {errors.username && (
               <div className="p-3 border border-red-600 bg-red-be8">
@@ -41,15 +41,19 @@ const Forgot = () => {
               />
             </div>
           </div>
-          <div className="w-full border-b flex"></div>
+          <div className="w-full border-b flex" />
           <div className="p-4 flex justify-end items-center">
-            <button className="rounded-md text-15px leading-9 ml-2 px-5 bg-stone-400 text-black font-semibold opacity-75">Hủy</button>
-            <button className="bg-blue-600 rounded-md text-15px leading-9 ml-2 px-5 text-white font-semibold">Tìm kiếm</button>
+            <button type="button" className="rounded-md text-15px leading-9 ml-2 px-5 bg-stone-400 text-black font-semibold opacity-75">
+              Hủy
+            </button>
+            <button type="button" className="bg-blue-600 rounded-md text-15px leading-9 ml-2 px-5 text-white font-semibold">
+              Tìm kiếm
+            </button>
           </div>
         </form>
       </div>
     </div>
   );
-};
+}
 
 export default Forgot;
