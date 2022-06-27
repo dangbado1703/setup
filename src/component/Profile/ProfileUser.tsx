@@ -86,14 +86,6 @@ function ProfileUser({ show, setShow }: IFormPropsProfile) {
         )}
         <input id="uploadFile" accept="image/*" type="file" hidden onChange={handleUploadFile} onKeyDown={handleKeyDownUpLoadFile} />
       </div>
-      <div>
-        <div>
-          <p>Bài viết</p>
-        </div>
-        <div>
-          <p>Giới thiệu</p>
-        </div>
-      </div>
     </div>
   );
 }
