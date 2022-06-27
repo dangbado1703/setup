@@ -1,10 +1,10 @@
 import React from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
-import getToken from '../config/constants/getToken';
+import { useAppSelector } from '../redux/hooks';
 
 function PrivateRoute() {
-  const token = getToken();
-  return token ? <Outlet /> : <Navigate to="/login" />;
+  const authenticated = useAppSelector((state) => state.loginReducer.isAuthenticated);
+  return authenticated ? <Outlet /> : <Navigate to="login" />;
 }
 
 export default PrivateRoute;

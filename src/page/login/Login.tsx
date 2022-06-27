@@ -22,7 +22,7 @@ function Login() {
   const authenticated = useAppSelector((state) => state.loginReducer.isAuthenticated);
   useEffect(() => {
     if (authenticated) {
-      navigate('/home');
+      navigate('/');
     }
   }, [authenticated]);
 

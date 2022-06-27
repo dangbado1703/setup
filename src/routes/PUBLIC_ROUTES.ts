@@ -7,17 +7,14 @@ const PUBLIC_ROUTES = [
   {
     path: path.LOGIN,
     component: Login,
-    exact: true,
   },
   {
     path: path.FORGOT,
     component: Forgot,
-    exact: false,
   },
   {
     path: path.REGISTER,
     component: Register,
-    exact: false,
   },
 ];
 
