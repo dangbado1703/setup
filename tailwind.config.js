@@ -10,6 +10,7 @@ module.exports = {
         500: '500px',
         432: '432px',
         170: '170px',
+        '9/10': '90%',
       },
       // custom height
       height: {

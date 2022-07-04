@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useLayoutEffect, useState } from 'react';
+import { Outlet, useNavigate, useParams } from 'react-router-dom';
 import ProfileUser from '../../component/Profile/ProfileUser';
 
 const menu = [
@@ -16,56 +17,51 @@ const menu = [
 
 function Profile() {
   const [show, setShow] = useState(false);
-  const [showBorder, setShowBorder] = useState(true);
+  const [showBorder, setShowBorder] = useState('post');
+  const navigate = useNavigate();
+  const params = useParams().username;
   const hideDiv = () => {
     setShow(false);
   };
-
+  useLayoutEffect(() => {
+    if (window.location.pathname.split(`/${params}/`)[1].includes('info')) {
+      setShowBorder('info');
+    }
+  }, []);
   const handleKeyDownHideDiv = () => {
     console.log('handleKeyDownHideDiv');
   };
-
-  const handleChangeBorder = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-    console.log(e.target);
-    setShowBorder(!showBorder);
+  const handleChangeBorder = (id: string) => {
+    menu.map((a) => {
+      if (a.id === id) {
+        setShowBorder(id);
+        navigate(`/${params}/${a.id}`);
+      }
+      return a.id;
+    });
   };
   const handleKeyDownChangeBorder = () => {
     console.log('asd');
   };
-
   return (
     <div className="w-full flex justify-center">
       <div className="w-2/3" onClick={hideDiv} onKeyDown={handleKeyDownHideDiv} role="presentation">
         <div className="w-full  ">
           <ProfileUser show={show} setShow={setShow} />
         </div>
-        <div className="mt-20 flex">
-          {/* <div
-            onClick={handleChangeBorder}
-            onKeyDown={handleKeyDownChangeBorder}
-            role="presentation"
-            className={`mr-8 ${
-              showBorder && 'relative after:absolute after:block after:w-full after:h-1 after:bg-red-500'
-            } cursor-pointer`}>
-            <p>Bài viết</p>
-          </div>
-          <div
-            onClick={handleChangeBorder}
-            onKeyDown={handleKeyDownChangeBorder}
-            role="presentation"
-            className={`${!showBorder && 'relative after:absolute after:block after:w-full after:h-1 after:bg-red-500'} cursor-pointer`}>
-            <p>Giới thiệu</p>
-          </div> */}
+        <div className="mt-20 flex mb-5">
           {menu.map((a) => (
             <div
+              key={a.id}
               role="presentation"
-              onClick={(e) => handleChangeBorder(e)}
+              onClick={() => handleChangeBorder(a.id)}
               onKeyDown={handleKeyDownChangeBorder}
-              className={`${a.id === 'post' && 'mr-8'} ${a.classname} cursor-pointer`}>
+              className={`${a.id === 'post' && 'mr-8'} ${showBorder === a.id ? a.classname : ''} cursor-pointer`}>
               <p>{a.name}</p>
             </div>
           ))}
         </div>
+        <Outlet />
       </div>
     </div>
   );

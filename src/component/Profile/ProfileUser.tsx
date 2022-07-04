@@ -1,28 +1,12 @@
 import { faCamera, faTrash, faUpload } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
-import { getProfile } from '../../page/profile/profile.reducer';
-import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import anhbia from '../../assets/anhbia.jpg';
 import avatar from '../../assets/avatar.jpg';
 import { IFormPropsProfile } from '../../model/formprops/profileuser.model';
 
 function ProfileUser({ show, setShow }: IFormPropsProfile) {
   const [valueUpload, setValueUpload] = useState<File>();
-  const params = useParams().username;
-  const dispatch = useAppDispatch();
-  const dataProfile = useAppSelector((state) => state.profileReducer.dataProfile);
-  console.log(dataProfile);
-  useEffect(() => {
-    if (params) {
-      const user = {
-        username: params,
-      };
-      dispatch(getProfile(user));
-    }
-  }, []);
-
   useEffect(() => {
     if (valueUpload) {
       console.log('hello');
