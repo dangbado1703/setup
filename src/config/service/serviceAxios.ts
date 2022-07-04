@@ -3,7 +3,7 @@ import instance from './index';
 
 export const getMethod = async (url: string, params: any) => {
   const response: AxiosResponse = await instance.get(url, {
-    params
+    params,
   });
   return response.data;
 };
