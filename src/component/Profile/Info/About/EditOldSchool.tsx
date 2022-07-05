@@ -1,7 +1,9 @@
 import React, { useState } from 'react';
+import { useParams } from 'react-router-dom';
 import { IFormPropsAbout } from '../../../../model/formprops/about.model';
 import { IFormValueEditSchool } from '../../../../model/formvalue/editOldSchool.model';
-import { useAppSelector } from '../../../../redux/hooks';
+import { useAppDispatch, useAppSelector } from '../../../../redux/hooks';
+import { updateProfile } from './about.reducer';
 
 function EditOldSchool({ show, setShow, dataInfo, setDataInfo, id }: IFormPropsAbout) {
   const [formEditSchool, setFormEditSchool] = useState<IFormValueEditSchool>({
@@ -12,6 +14,7 @@ function EditOldSchool({ show, setShow, dataInfo, setDataInfo, id }: IFormPropsA
     degreeInput: '',
   });
   const data = useAppSelector((state) => state.aboutReducer.dataInfo);
+  const dispatch = useAppDispatch();
   const handleCancel = () => {
     setShow({ ...show, oldSchool: false });
     data.map((a) => {
@@ -21,9 +24,21 @@ function EditOldSchool({ show, setShow, dataInfo, setDataInfo, id }: IFormPropsA
       return a;
     });
   };
-  const handleSubmitEditSchool = (e: React.FormEvent<HTMLFormElement>) => {
+  const params = useParams();
+  const handleSubmitEditSchool = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(formEditSchool);
+    const body = {
+      username: params.username,
+      schoolName: formEditSchool.school,
+    };
+    dispatch(updateProfile(body));
+    setShow({ ...show, oldSchool: false });
+    data.map((a) => {
+      if (a.id === id) {
+        setDataInfo(dataInfo.concat(a));
+      }
+      return a;
+    });
   };
   return (
     <div className="mb-3">

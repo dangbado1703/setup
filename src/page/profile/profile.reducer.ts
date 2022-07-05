@@ -7,8 +7,9 @@ const initState = {
   dataProfile: {} as IFormInfo,
 };
 
-export const getProfile = createAsyncThunk('profileUser/getProfile', async (value: { username: string }) => {
+export const getProfile = createAsyncThunk('profileUser/getProfile', async (value: { username: string | undefined }) => {
   const data: IForm<IFormInfo> = await instance.post('/profile', value);
+  localStorage.setItem('info', JSON.stringify(data.data.info));
   return data.data;
 });
 

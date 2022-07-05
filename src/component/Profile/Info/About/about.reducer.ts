@@ -1,15 +1,38 @@
 import { IconDefinition } from '@fortawesome/free-solid-svg-icons';
-import { createSlice } from '@reduxjs/toolkit';
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import instance from '../../../../config/service';
 import { IFormDataAbout } from '../../../../model/formvalue/formDataAbout';
+import { getProfile } from '../../../../page/profile/profile.reducer';
+import { AppThunk } from '../../../../redux/store';
 
 const initState = {
   showFunc: null as IconDefinition | null,
   checkClick: 1,
   dataInfo: [] as IFormDataAbout[],
 };
+interface IFormBody {
+  username: string | undefined;
+  schoolName: string;
+}
+
+const update = createAsyncThunk('about/update', async (body: IFormBody) => {
+  const data = await instance.post('/profile/update', body);
+  return data;
+});
+
+export const updateProfile =
+  (body: IFormBody): AppThunk =>
+  async (dispatch) => {
+    await dispatch(update(body));
+    await dispatch(
+      getProfile({
+        username: body.username,
+      })
+    );
+  };
 
 const aboutSlice = createSlice({
-  name: 'icon',
+  name: 'about',
   initialState: initState,
   reducers: {
     saveIconAbout(state, action) {

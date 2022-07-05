@@ -12,7 +12,7 @@ import {
   IconDefinition,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import _ from 'lodash';
 import { IFormDataAbout } from '../../../../model/formvalue/formDataAbout';
 import { useAppDispatch, useAppSelector } from '../../../../redux/hooks';
@@ -59,6 +59,8 @@ function About() {
   const dispatch = useAppDispatch();
   const showFunc = useAppSelector((state) => state.aboutReducer.showFunc)?.iconName;
   const checkClick = useAppSelector((state) => state.aboutReducer.checkClick);
+  const profile = useAppSelector((state) => state.profileReducer.dataProfile);
+  console.log(profile);
   const handleShowFunc = (icon: IconDefinition, e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     e.stopPropagation();
     dataInfo.map((a) => {
@@ -75,6 +77,17 @@ function About() {
       return icon;
     });
   };
+  useEffect(() => {
+    if (profile) {
+      info[0].hightLight = profile?.info?.company ? profile.info.company : '';
+      info[1].hightLight = profile?.info?.schoolName ? profile.info.schoolName : '';
+      info[2].hightLight = profile?.info?.province ? profile.info.province : '';
+      info[3].hightLight = profile?.info?.from ? profile.info.from : '';
+      info[4].hightLight = profile?.info?.married ? profile.info.married : '';
+      info[5].hightLight = profile?.info?.phone ? profile.info.phone : '';
+      setDataInfo(info);
+    }
+  }, [profile]);
   const handleEdit = (id: number, data: IFormDataAbout) => {
     dispatch(saveData(data));
     const newArr = dataInfo.filter((a) => a.id !== id);
@@ -142,7 +155,7 @@ function About() {
             <div className="w-9 h-9 flex justify-center items-center text-xl mr-2">
               <FontAwesomeIcon icon={a.icon} className="opacity-60" />
             </div>
-            <span className="inline-block w-9/10">
+            <span className="inline-block">
               {a.name} <span className="font-bold">{a.hightLight}</span>
             </span>
           </div>

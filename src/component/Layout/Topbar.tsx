@@ -24,13 +24,13 @@ function Topbar({ children }: any) {
   }, []);
 
   useEffect(() => {
-    const blob = new Blob([dataProfile?.avatar], { type: 'image' });
+    const blob = new Blob([dataProfile?.info?.avatar], { type: 'image' });
     const img = URL.createObjectURL(blob);
     setAvatar(img);
     return () => {
       URL.revokeObjectURL(img);
     };
-  }, [dataProfile, dataProfile.avatar]);
+  }, [dataProfile]);
 
   const handleLogOut = () => {
     localStorage.clear();
@@ -94,7 +94,7 @@ function Topbar({ children }: any) {
           tabIndex={0}
           role="button">
           <div className="w-10 h-10 text-lg rounded-full border flex justify-center items-center cursor-pointer">
-            {dataProfile.avatar ? <img src={avatar} alt="user" /> : <FontAwesomeIcon icon={faUserTie} />}
+            {dataProfile.info && dataProfile.info.avatar ? <img src={avatar} alt="user" /> : <FontAwesomeIcon icon={faUserTie} />}
           </div>
           <span className="ml-2">{infoName}</span>
         </div>
