@@ -4,9 +4,9 @@ import { toast, ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './App.scss';
 import NotFound from './component/NotFound';
-import { clearIconAbout } from './component/Profile/Info/about.reducer';
+import { clearIconAbout, setCheckClick } from './component/Profile/Info/About/about.reducer';
 import getToken from './config/constants/getToken';
-import { useAppDispatch } from './redux/hooks';
+import { useAppDispatch, useAppSelector } from './redux/hooks';
 // import Home from './page/home/Home';
 import PRIVATE_ROUTES from './routes/PRIVATE_ROUTES';
 import PUBLIC_ROUTES from './routes/PUBLIC_ROUTES';
@@ -15,6 +15,7 @@ import path from './routes/routes';
 function App() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const checkClick = useAppSelector((state) => state.aboutReducer.checkClick);
   const token = getToken();
   useEffect(() => {
     if (!token) {
@@ -22,13 +23,14 @@ function App() {
     }
   }, []);
   const handleHide = () => {
+    if (checkClick === 2) {
+      dispatch(setCheckClick(1));
+    }
     dispatch(clearIconAbout());
   };
-  const handleKeyDownHide = () => {
-    console.log('hello');
-  };
+
   return (
-    <div onClick={handleHide} onKeyDown={handleKeyDownHide} role="presentation" className="App">
+    <div onClick={handleHide} role="presentation" className="App">
       <ToastContainer position={toast.POSITION.TOP_RIGHT} autoClose={3000} />
       <Routes>
         {token ? (

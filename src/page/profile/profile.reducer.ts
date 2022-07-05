@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import instance from '../../config/service';
 import IForm from '../../model/index.model';
-import { IFormInfo } from '../../model/profile.model';
+import { IFormInfo } from '../../model/formdata/profile.model';
 
 const initState = {
   dataProfile: {} as IFormInfo,

@@ -1,6 +1,7 @@
-import React, { useLayoutEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Outlet, useNavigate, useParams } from 'react-router-dom';
 import ProfileUser from '../../component/Profile/ProfileUser';
+import instance from '../../config/service';
 
 const menu = [
   {
@@ -23,14 +24,27 @@ function Profile() {
   const hideDiv = () => {
     setShow(false);
   };
-  useLayoutEffect(() => {
-    if (window.location.pathname.split(`/${params}/`)[1].includes('info')) {
+  useEffect(() => {
+    if (window.location.pathname.split(`/${params}/`)[1] && window.location.pathname.split(`/${params}/`)[1].includes('info')) {
       setShowBorder('info');
+    } else {
+      setShowBorder('post');
+      navigate('post');
     }
   }, []);
-  const handleKeyDownHideDiv = () => {
-    console.log('handleKeyDownHideDiv');
-  };
+  useEffect(() => {
+    if (params) {
+      const getProfile = async () => {
+        const user = {
+          username: params,
+        };
+        const data = await instance.post('/profile/update', user);
+        console.log(data);
+        return data;
+      };
+      getProfile();
+    }
+  }, []);
   const handleChangeBorder = (id: string) => {
     menu.map((a) => {
       if (a.id === id) {
@@ -40,12 +54,10 @@ function Profile() {
       return a.id;
     });
   };
-  const handleKeyDownChangeBorder = () => {
-    console.log('asd');
-  };
+
   return (
     <div className="w-full flex justify-center">
-      <div className="w-2/3" onClick={hideDiv} onKeyDown={handleKeyDownHideDiv} role="presentation">
+      <div className="w-2/3" onClick={hideDiv} role="presentation">
         <div className="w-full  ">
           <ProfileUser show={show} setShow={setShow} />
         </div>
@@ -55,7 +67,6 @@ function Profile() {
               key={a.id}
               role="presentation"
               onClick={() => handleChangeBorder(a.id)}
-              onKeyDown={handleKeyDownChangeBorder}
               className={`${a.id === 'post' && 'mr-8'} ${showBorder === a.id ? a.classname : ''} cursor-pointer`}>
               <p>{a.name}</p>
             </div>

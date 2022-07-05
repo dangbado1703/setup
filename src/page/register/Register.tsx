@@ -5,7 +5,7 @@ import { SubmitHandler, useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { range } from '../../config/constants/constants';
-import { IFormRegister } from '../../model/value.model';
+import { IFormRegister } from '../../model/formvalue/value.model';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { registerAccount, resetState } from './register.reducer';
 
@@ -14,9 +14,6 @@ function Register() {
   const navigate = useNavigate();
   const isRegisterSuccess = useAppSelector((state) => state.registerReducer.isRegisterSuccess);
   const messageSuccess = useAppSelector((state) => state.registerReducer.messageSuccess);
-
-  console.log(messageSuccess);
-
   const day = range(1, 31);
   const month = range(1, 12);
   const getYear = new Date().getFullYear();

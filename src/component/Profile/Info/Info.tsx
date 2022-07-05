@@ -40,33 +40,22 @@ function Info() {
       return id;
     });
   };
-  const handleOnKeyDownInfo = () => {
-    console.log('hello');
-  };
   const handleAbout = () => {
     setCheckChoose(2);
     setCheckHover(2);
     navigate('about');
-  };
-  const handleOnKeyDownAbout = () => {
-    console.log('hello');
   };
   return (
     <div>
       <div className="shadow-register rounded-2xl flex">
         <div className="w-1/3 border-r-2 border-r-slate-200 px-2 py-4">
           <ul>
-            <li
-              role="presentation"
-              onKeyDown={handleOnKeyDownAbout}
-              onClick={handleAbout}
-              className="text-xl font-semibold cursor-pointer mt-1 mb-5 mx-3">
+            <li role="presentation" onClick={handleAbout} className="text-xl font-semibold cursor-pointer mt-1 mb-5 mx-3">
               Giới thiệu
             </li>
             {menuInfo.map((a) => (
               <li
                 role="presentation"
-                onKeyDown={handleOnKeyDownInfo}
                 onClick={() => handleInfo(a.id)}
                 key={a.id}
                 className={`${a.className} ${checkHover === a.id ? '' : 'hover:bg-slate-100'} ${

@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import instance from '../../config/service';
 import IFormDataLogin from '../../model/formdata/login.data';
 import IForm from '../../model/index.model';
-import { IValueLogin } from '../../model/value.model';
+import { IValueLogin } from '../../model/formvalue/value.model';
 
 const initState = {
   isAuthenticated: false,

@@ -2,7 +2,7 @@ import { faBell, faMessage, faUser, faUserTie } from '@fortawesome/free-solid-sv
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { IFormInfo } from '../../model/profile.model';
+import { IFormInfo } from '../../model/formdata/profile.model';
 import { getProfile } from '../../page/profile/profile.reducer';
 import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import Search from '../Navbar/Search';

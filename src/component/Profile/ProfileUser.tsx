@@ -21,15 +21,9 @@ function ProfileUser({ show, setShow }: IFormPropsProfile) {
       setValueUpload(e.target.files[0]);
     }
   };
-  const handleKeyDownUpLoadFile = () => {
-    console.log('handleKeyDownUpLoadFile');
-  };
   const showDiv = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
     e.stopPropagation();
     setShow(!show);
-  };
-  const handleKeyDownStopPropagation = () => {
-    console.log('hello');
   };
   return (
     <div>
@@ -53,7 +47,6 @@ function ProfileUser({ show, setShow }: IFormPropsProfile) {
             <div className="p-2">
               <label
                 onClick={handleStopPropagation}
-                onKeyUp={handleKeyDownStopPropagation}
                 typeof="button"
                 role="presentation"
                 htmlFor="uploadFile"
@@ -68,7 +61,7 @@ function ProfileUser({ show, setShow }: IFormPropsProfile) {
             </div>
           </div>
         )}
-        <input id="uploadFile" accept="image/*" type="file" hidden onChange={handleUploadFile} onKeyDown={handleKeyDownUpLoadFile} />
+        <input id="uploadFile" accept="image/*" type="file" hidden onChange={handleUploadFile} />
       </div>
     </div>
   );

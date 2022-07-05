@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import instance from '../../config/service';
 import IForm from '../../model/index.model';
-import { IFormRegister } from '../../model/value.model';
+import { IFormRegister } from '../../model/formvalue/value.model';
 
 const initState = {
   isRegisterSuccess: false,

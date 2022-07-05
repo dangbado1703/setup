@@ -1,5 +1,5 @@
 import Topbar from '../component/Layout/Topbar';
-import About from '../component/Profile/Info/About';
+import About from '../component/Profile/Info/About/About';
 import AboutContact from '../component/Profile/Info/AboutContact';
 import AboutDetails from '../component/Profile/Info/AboutDetails';
 import Info from '../component/Profile/Info/Info';
